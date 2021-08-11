@@ -14,64 +14,19 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 " ===
 " === Editor behavior
 " ===
 set number
-"set relativenumber
-set cursorline
-set noexpandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-
-autocmd BufNewFile,BufRead *.vim setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
-autocmd BufNewFile,BufRead *.json setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
-" autocmd FileType c :set autowrite
-" autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
-
 set autoindent
-set list
-set listchars=tab:\|\ ,trail:▫
-set scrolloff=4
-"set notimeout
-"set ttimeoutlen=0
-"set viewoptions=cursor,folds,slash,unix
-set wrap
-"set textwidth=0
-set indentexpr=
-set foldmethod=indent
-set foldlevel=99
-set foldenable
-"set formatoptions-=tc
-"set noshowmode
-set showcmd
-set wildmenu
-set ignorecase
-set smartcase
-"set shortmess+=c
-"set inccommand=split
-"set completeopt=longest,noinsert,menuone,noselect,preview
-set lazyredraw "same as above
-"set visualbell
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
 
-"silent !mkdir -p ~/.config/nvim/tmp/backup
-""silent !mkdir -p ~/.config/nvim/tmp/sessions
-"set backupdir=~/.config/nvim/tmp/backup,.
-"set directory=~/.config/nvim/tmp/backup,.
-
-set colorcolumn=80
-set updatetime=100
-set virtualedit=block
-
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-
+"set relativenumber
 " ===
 " === Basic Mappings
 " ===
-
 " Set <LEADER> as <SPACE>
 let mapleader=" "
 
@@ -81,10 +36,6 @@ noremap Q :q<CR>
 noremap ,q :q!<CR>
 "noremap <C-q> :qa<CR>
 inoremap kj <Esc>
-
-" Replace the character under the cursor with {char}.
-nnoremap 0 r
-
 
 " Open the vimrc file anytime
 noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
@@ -109,6 +60,22 @@ noremap <LEADER><CR> :nohlsearch<CR>
 " Adjacent duplicate words
 noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
 
+"===coc.nivm===
+set shortmess+=c
+set updatetime=100
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Space to Tab
 "nnoremap <LEADER>tt :%s/    /\t/g
 "vnoremap <LEADER>tt :s/    /\t/g
@@ -234,7 +201,7 @@ Plug 'ajmwagar/vim-deus'
 " UI Beautification
 Plug 'mhinz/vim-startify'
 "Plug 'ryanoasis/vim-devicons'
-Plug 'luochen1990/rainbow'
+"Plug 'luochen1990/rainbow'
 
 " Emoji
 Plug 'junegunn/vim-emoji'
@@ -246,6 +213,8 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
